@@ -1,0 +1,114 @@
+
+
+
+<div class="col-md-8 col-md-offset-2">
+
+  <div *ngIf="location" name="part1">
+  <header>
+    <h1>{{location.city}}</h1>
+    <p class="loc">{{location.country}}</p>
+    <p class="desc">{{location.description}}</p>
+    <p style="float:left;margin-bottom:15px;font-size:18px;display:inline;" *ngIf="logged">Rate:
+
+      <rating [(ngModel)]="rating"
+              [max]="10" (click)="rate()">
+      </rating>
+    </p>
+
+    <p style="float: right; font-size: 18px; margin-bottom:15px;">Rating: {{location.rating}}
+      <rating [(ngModel)]="rtng" [max]="1" [readonly]="true"></rating>
+
+
+      <!--<span style="margin-left: 5px" class="glyphicon glyphicon-star"></span>
+      <span *ngFor="let n of polni" class="glyphicon glyphicon-star"></span>
+      <span *ngFor="let n of prazni" class="glyphicon glyphicon-star-empty"></span>-->
+    </p>
+    <br/>
+  </header>
+
+  </div>
+  <hr />
+
+  <div  *ngIf="location" name="part2">
+    <h3 style="color: gray;">Photos: </h3>
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <img src="{{location.pictures[0]}}" alt="picture" style="width:100%; height: 500px !important;">
+                  </div>
+                  <div class="item" *ngFor="let img of location.pictures.slice(1)">
+                    <img src="{{img}}" alt="picture" style="width:100%; height: 400px !important;">
+                  </div>
+
+
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+            </div>
+    <!--gallery [datasource]="location.pictures"></gallery-->
+  </div>
+  <hr />
+
+  <div name="comments" *ngIf="location" style="margin-top:20px;padding-top:5px;padding-bottom:20px;">
+    <h3>Comments</h3>
+
+    <div style="margin-bottom:50px;" *ngFor="let comment of location.comments">
+      <div class="col-md-3"><a style="margin-right:15px;width:15%;" [routerLink]="['/user', comment.user_id]">{{comment.user_fullname}}</a></div>
+      <div class="col-md-6"><span>{{comment.comment}}</span></div>
+      <div class="col-md-3">
+        <span *ngIf="!comment.owner" style="float:right;;margin-left:10px;"></span>
+        <span *ngIf="comment.owner" (click)="removeComment(comment._id)" style="float:right;cursor:pointer;color:skyblue;margin-left:10px;" title="Remove" class="glyphicon glyphicon-remove"></span>
+        <span style="float:right;">{{comment.date_added | date:'dd MMM yyyy H:m'}}</span>
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="logged">
+      <textarea rows="2" class="form-control" [(ngModel)]="comment"></textarea>
+      <button (click)="postComment()" style="float:right;margin-top:15px;margin-bottom:25px" class="btn btn-primary">Comment</button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div  *ngIf="stories" name="part3">
+    <h3 style="color: gray;">Stories at this destination: </h3>
+     <div class="col-md-4 col-sm-5 hero-feature" *ngFor="let story of stories">
+
+          <mini-story [story]="story" ></mini-story>
+
+      </div>
+
+  </div>
+
+
+
+
+</div>
+
+<style type="text/css">
+  .desc{
+    font-size: 20px;
+    text-align: center;
+    font-family: times, serif;
+    font-style: normal;
+  }
+  .by {
+    float: right;
+  }
+  h1, .loc{
+    text-align: center;
+  }
+  hr{
+    margin-top: 50px;
+  }
+</style>

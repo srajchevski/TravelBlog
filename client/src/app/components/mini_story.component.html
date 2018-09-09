@@ -1,0 +1,27 @@
+<div [routerLink]="['/story', story._id]">
+<div class="thumbnail" style="text-align:center;cursor:pointer;background-color: white;">
+  <img style="width: 800px; height: 200px;  " src="{{story.pictures[0]}}" alt="" >
+  <div class="caption">
+    <h3 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{story.title}}</h3>
+          <p>
+            <span class="glyphicon glyphicon-globe"></span>
+                  <a [routerLink]="['/destination', story.location]" style="color:gray;font-weight:bold;margin-left:5px;" >{{story.city}} | {{story.country}}</a>
+          </p>
+        <div class="grupa" style="margin-top: 20px; margin-bottom: 20px;">
+          <p style="text-align:left;" >
+          <span class="glyphicon glyphicon-calendar"></span>
+          <span style="color:gray;font-weight:bold;margin-left:5px">{{story.date_added | date:'dd MMM yyyy'}}</span>
+          <span style="float:right;">
+          <span class="glyphicon glyphicon-thumbs-up" style="font-size: 25px; color: skyblue;">
+          </span>
+          <span class="badge" style="margin-bottom: 15px;">{{story.rating}}</span></span>
+          </p>
+        </div>
+
+    <!--p>
+      <a [routerLink]="['/story', story._id]" class="btn btn-info" style="position: center;">View story</a>
+    </p-->
+  </div>
+</div>
+</div>
+

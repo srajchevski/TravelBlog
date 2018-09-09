@@ -1,0 +1,23 @@
+<!--div class='form col-md-4 col-md-offset-4'>
+  <h1 class="text-center" >Login</h1>
+
+  <div class="form-group"><label>Username or Email:</label><input type="text" class="form-control" name="user" [(ngModel)]="user"></div>
+  <div class="form-group"><label>Password:</label><input type="password" class="form-control" name="password" [(ngModel)]="password"></div>
+  <button class="btn btn-primary" (click)="login()" style="float:right;">Prijavi</button>
+  <span>{{status}}</span>
+</div-->
+<div class="bcg">
+  <div class="wrapper">
+    <div class="form-signin">
+      <h2 class="form-signin-heading">Login</h2>
+      <input type="text" class="form-control" name="user" [(ngModel)]="user" placeholder="Username or Email" required="" autofocus="" />
+      <input type="password" class="form-control" name="password" [(ngModel)]="password" placeholder="Password" required=""/>
+
+      <button class="btn btn-lg btn-primary btn-block" (click)="login()">Login</button>
+      <p class="reg">Not registered? <a routerLink="/register">Create an account</a></p>
+      <p class="reg" style="font-size:20px">{{status}}</p>
+    </div>
+  </div>
+
+</div>
+

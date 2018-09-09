@@ -1,0 +1,185 @@
+<div class="animate">
+	<div class="row">
+		<div class="col-md-12 col-lg-12">
+			<div class="card" style="height:90px">
+				<div class="card-header card-primary card-inverse">
+					<span class="card-title">Stories</span>
+				</div>
+				<div class="card-block">
+
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="form-control" name="search" [(ngModel)]="search" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" (click)="onSearch()" type="button">Search</button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+          <div class="col-md-4 col-md-offset-1">
+              <div class="form-inline">
+                <label>Sort by: </label>
+                <select [ngModel]="sort" (ngModelChange)="onSort($event)" class="form-control">
+                  <option value=""></option>
+                  <option value="rating">Rating</option>
+                  <option value="date">Date</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-md-1 col-md-offset-3">
+            <button class="btn btn-primary" (click)="cleanStory()" data-toggle="modal" data-target="#create-modal" style="float:right;">Add new story</button>
+          </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+    <div class="loader" *ngIf="!stories"></div>
+    <table class="table table-striped" *ngIf="stories">
+      <thead>
+        <th>Title</th>
+        <th>Location</th>
+        <th>User</th>
+        <th class="text-center">Upvotes</th>
+        <th>Date</th>
+        <th class="text-center">View</th>
+        <th class="text-center">Edit</th>
+        <th class="text-center">Remove</th>
+      </thead>
+
+      <tbody >
+        <tr *ngFor="let story of stories">
+          <td>{{story.title}}</td>
+          <td>{{story.city}}, {{story.country}}</td>
+          <td>{{story.user_fullname}}</td>
+          <td class="text-center">{{story.rating}}</td>
+          <td>{{story.date_added}}</td>
+          <td class="text-center"><span class="glyphicon glyphicon-zoom-in" data-toggle="modal" data-target="#view-modal" (click)="setActiveStory(story)" style="cursor:pointer;color:deepskyblue;"></span></td>
+          <td class="text-center"><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal" (click)="setActiveStory(story)" style="cursor:pointer;color:deepskyblue;"></span></td>
+          <td class="text-center"><span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#remove-modal" (click)="setActiveStory(story)" style="cursor:pointer;color:deepskyblue;"></span></td>
+        </tr>
+      </tbody>
+    </table>
+	</div>
+</div>
+
+
+<div id='view-modal' class='modal fade' role='dialog' *ngIf="activeStory">
+  <div class='modal-dialog'>
+
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+        <h4 class='modal-title'>View story</h4>
+      </div>
+      <div class='form-group col-md-6' style="margin-top:50px"><label>Title:</label><p>{{activeStory.title}}</p></div>
+      <div class='form-group col-md-6' style="margin-top:50px"><label>Location:</label><p>{{activeStory.full_location}}</p></div>
+      <div class='form-group col-md-6' style="margin-top:50px"><label>Upvotes:</label><p>{{activeStory.rating}}</p></div>
+      <div class='form-group col-md-6' style="margin-top:50px"><label>By:</label><p>{{activeStory.user_fullname}}</p></div>
+      <div class='form-group col-md-12'><label>Description:</label><p>{{activeStory.description}}></p></div>
+      <div class='form-group col-md-12'><label style="display:block">Pictures:</label>
+        <a *ngFor="let pic of activeStory.pictures" target="_blank" href="{{pic}}"><img src="{{pic}}" style="margin-right:15px" height="75" width="75"/></a>
+      </div>
+
+
+      <div class='modal-footer'>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id='create-modal' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+        <h4 class='modal-title'>Create new story</h4>
+      </div>
+      <div class='modal-body'>
+        <div class='form-group col-md-6' style="margin-top:50px"><label>*Title:</label><input type="text" class="form-control" name="newStory.title" [(ngModel)]="newStory.title"></div>
+        <div class='form-group col-md-6' style="margin-top:50px">
+          <label>*Location:</label>
+          <select class="form-control" [(ngModel)]="newStory.location">
+            <option *ngFor="let loc of locations" value="{{loc._id}}">{{loc.city}}, {{loc.country}}</option>
+          </select>
+        </div>
+        <div class='form-group col-md-12'><label>*Description:</label><textarea rows="2" class="form-control" name="newStory.description" [(ngModel)]="newStory.description"></textarea></div>
+        <div class='form-group col-md-12'><label>Pictures:</label><input type="file" multiple (change)="uploadNewPic($event)"></div>
+
+
+      </div>
+      <div class='modal-footer'>
+        <button (click)="createStory()" data-dismiss='modal' class='btn btn-success'>Create</button>
+        <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id='edit-modal' class='modal fade' role='dialog' *ngIf="activeStory">
+  <div class='modal-dialog'>
+
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+        <h4 class='modal-title'>Edit story</h4>
+      </div>
+      <div class='modal-body'>
+        <div class='form-group col-md-6' style="margin-top:50px"><label>*Title:</label><input type="text" class="form-control" name="activeStory.city" [(ngModel)]="activeStory.city"></div>
+        <div class='form-group col-md-6' style="margin-top:50px">
+          <label>*Location:</label>
+          <select class="form-control" [(ngModel)]="activeStory.location">
+            <option *ngFor="let loc of locations" value="{{loc._id}}">{{loc.city}}, {{loc.country}}</option>
+          </select>
+        </div>
+        <div class='form-group col-md-12'><label>*Description:</label><textarea rows="2" class="form-control" name="activeStory.description" [(ngModel)]="activeStory.description"></textarea></div>
+
+        <div class='form-group col-md-12'><label>Pictures:</label><input type="file" multiple (change)="uploadPic($event)"></div>
+      </div>
+      <div class='modal-footer'>
+        <button (click)="editStory()" data-dismiss='modal' class='btn btn-success'>Edit</button>
+        <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id='remove-modal' class='modal fade' role='dialog' *ngIf="activeStory">
+  <div class='modal-dialog'>
+
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+        <h4 class='modal-title'>Remove story</h4>
+      </div>
+      <div class='modal-body'>
+        <p>Are you sure you want to remove this story?</p>
+      </div>
+      <div class='modal-footer'>
+        <button (click)="deleteStory()" data-dismiss='modal' class='btn btn-success'>Remove</button>
+        <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<style type="text/css">
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin-left:46%;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>

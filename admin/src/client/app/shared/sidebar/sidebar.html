@@ -1,0 +1,43 @@
+<aside id="sidebar">
+    <div class="sidenav-outer">
+        <div class="menu-body">
+            <ul class="nav nav-pills nav-stacked sidenav">
+                <li>
+                    <a [routerLink]="['home']" class="website-name">
+                        ADMIN
+                    </a>
+                </li>
+                <li *ngIf="user">
+                    <a [routerLink]="['home']" class="logo">
+                        <img src="{{user.profile_picture}}" class="user-avatar img-circle" style="width:75px;" />
+                        <p class="text-xs-center">{{user.first_name}} {{user.last_name}}</p>
+                        <p class="text-xs-center" style="background-color: green;margin-left: 20%;margin-right: 20%;">@{{user.username}}</p>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="['home']">
+                        <i class="fa fa-home"></i>
+                        <span>&nbsp; Home</span>
+                    </a>
+                </li>
+                <li class="nested" [ngClass]="{'expand' : showMenu === 'pages' }">
+                    <a (click)="addExpandClass('pages')"><i class="fa fa-chevron-circle-down"></i><span>&nbsp;&nbsp; Pages</span></a>
+                    <ul class="submenu">
+                        <li>
+                          <a [routerLink]="['stories']"><span>Stories</span></a>
+                        </li>
+                        <li>
+                          <a [routerLink]="['destinations']"><span>Destinations</span></a>
+                        </li>
+                        <li>
+                          <a [routerLink]="['users']"><span>Users</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a (click)="logout()"><i class="fa fa-sign-out"></i><span>&nbsp;&nbsp; Logout</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>

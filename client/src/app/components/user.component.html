@@ -1,0 +1,47 @@
+<div class="col-md-8 col-md-offset-2" *ngIf="user">
+
+  <ngui-map [options]="allOptions" *ngIf="positions">
+    <marker *ngFor="let pos of positions" [position]="pos"></marker>
+  </ngui-map>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" style="height: 120px;">
+      <img style="border: 2px solid gray;float:left;" src="{{user.profile_picture}}" class="img-circle" width="250" height="250">
+      <div style="float: left; margin-left: 20px;">
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <h4><span *ngIf="user.username" class="label label-success">@{{user.username}}</span></h4>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div  style=" margin-left: 270px;">
+      <h4>Description: </h4>
+      <p style="font-family: times;">{{user.description}}</p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <div  *ngIf="stories" name="part3">
+
+    <h3 style="color: gray;">Diary: </h3>
+     <div class="col-md-4 col-sm-6 hero-feature" *ngFor="let story of stories">
+
+          <mini-story [story]="story" ></mini-story>
+
+      </div>
+
+  </div>
+
+  <div *ngIf="stories" id="imgs" name="part4" style="margin-top:25px;">
+    <h3 style="text-align: center;">MY DIARY</h3>
+    <diary-scene [pages]="stories"></diary-scene>
+
+  </div>
+
+
+</div>
+

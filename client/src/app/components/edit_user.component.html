@@ -1,0 +1,62 @@
+<!--div class='form_prijava_reg_dodaj col-md-4 col-md-offset-4' *ngIf="user">
+  <h1 class="text-center">Edit user</h1>
+
+  <div class='form-group col-md-6' style="margin-top:50px"><label>*First name:</label><input type="text" class="form-control" name="user.first_name" [(ngModel)]="user.first_name"></div>
+  <div class='form-group col-md-6' style="margin-top:50px"><label>*Last name:</label><input type="text" class="form-control" name="user.last_name" [(ngModel)]="user.last_name"></div>
+  <div class='form-group'><label>*Username:</label><input type="text" class="form-control" name="user.username" [(ngModel)]="user.username"></div>
+  <div class='form-group'><label>*Email:</label><input type="email" class="form-control" name="user.email" [(ngModel)]="user.email"></div>
+  <div class='form-group'><label>Old password:</label><input type="password" class="form-control" name="old_password" [(ngModel)]="old_password"></div>
+  <div class='form-group'><label>New password:</label><input type="password" class="form-control" name="new_password" [(ngModel)]="new_password"></div>
+
+  <div class='form-group'>
+    <label>Location:</label>
+    <select class="form-control" [(ngModel)]="user.location">
+      <option *ngFor="let loc of locations" value="{{loc._id}}">{{loc.city}}, {{loc.country}}</option>
+    </select>
+  </div>
+  <div class='form-group'><label>Description:</label><textarea rows="2" class="form-control" name="user.description" [(ngModel)]="user.description"></textarea></div>
+  <div class='form-group'><label>Age:</label><input type="number" min="8" max="110" class="form-control" name="user.age" [(ngModel)]="user.age"></div>
+  <div class='form-group'><label>Profile picture:</label><input type="file" (change)="uploadPic($event)"></div>
+
+  <button class="btn btn-success" (click)="edit()" style="float:right;">Edit info</button>
+  <span>{{status}}</span>
+</div-->
+
+
+<div class="form_prijava_reg_dodaj" *ngIf="user">
+  <div class="wrapper bcg">
+    <div class="form-signin">     
+        <div class="form-group">
+      <h2 class="form-signin-heading">Edit user</h2>
+      
+      <div class="form-inline">
+        <input type="text" class="form-control" style="width: 200px;" name="user.first_name" [(ngModel)]="user.first_name">
+        <input type="text" class="form-control" style="margin-left: 2px; width: 200px;" name="user.last_name" [(ngModel)]="user.last_name">
+      </div>
+      <div class='form-inline'><label style="margin-right: 83px;">Username:</label><input style="width: 250px;" type="text" class="form-control" name="user.username" [(ngModel)]="user.username"></div>
+
+      <div class='form-inline'><label style="margin-right: 114px;">Email:</label><input style="width: 250px;" type="email" class="form-control" name="user.email" [(ngModel)]="user.email"></div>
+      <div class='form-inline'><label style="margin-right: 55px;">Old password:</label><input style="width: 250px;" type="password" class="form-control" name="old_password" [(ngModel)]="old_password"></div>
+      <div class='form-inline'><label style="margin-right: 50px;">New password:</label><input style="width: 250px;" type="password" class="form-control" name="new_password" [(ngModel)]="new_password"></div>
+      
+
+      <div class='form-group form-inline'>
+          <label style="margin-right: 40px;">Location:</label>
+        <select class="form-control" [(ngModel)]="user.location">
+          <option *ngFor="let loc of locations" value="{{loc._id}}">{{loc.city}}, {{loc.country}}</option>
+        </select>
+      </div>
+      <div class='form-group'><label>Description:</label><textarea rows="2" class="form-control" name="user.description" [(ngModel)]="user.description"></textarea></div>
+      <div class='form-group form-inline' style="float: left;"><label>Age:</label><input style="width: 70px;" type="number" min="8" max="110" class="form-control" name="user.age" [(ngModel)]="user.age"></div>
+      <div class="form-inline" style="margin-left: 150px;"><label>Profile picture:</label><input type="file" (change)="uploadPic($event)"></div>
+     
+      <div class="form-inline">     
+        <p class="reg" style=" float: left;" >{{status}}</p>
+        <button class="btn btn-success" (click)="edit()" style="margin-top: 25px; float: right;">Edit info</button>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+
+</div>

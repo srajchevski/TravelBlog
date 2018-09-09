@@ -1,0 +1,71 @@
+<div class="animate">
+    <div class="animate">
+      <div class="row">
+
+      </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header card-info card-inverse">
+                        <h3 class="card-title">Statistics</h3>
+                    </div>
+                    <div class="card-block">
+                        <div class="form-group col-md-3">
+                          <label style="display:block">From:</label>
+                          <material-datepicker (onSelect)="changeTab(tab)" [rangeEnd]="toDate" [(date)]="fromDate"></material-datepicker>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label style="display:block">To:</label>
+                          <material-datepicker (onSelect)="changeTab(tab)" [rangeStart]="fromDate" [(date)]="toDate"></material-datepicker>
+                        </div>
+
+                        <br/><br/><br/>
+
+                        <ul class="nav nav-tabs" style="margin-top:20px;margin-bottom:20px;">
+                          <li role="presentation" (click)="changeTab(1)" [class.active]="tab===1"><a class='tabs'>Stories (per user)</a></li>
+                          <li role="presentation" (click)="changeTab(2)" [class.active]="tab===2"><a class='tabs'>Stories (per location)</a></li>
+                          <li role="presentation" (click)="changeTab(3)" [class.active]="tab===3"><a class='tabs'>Views (per story)</a></li>
+                          <li role="presentation" (click)="changeTab(4)" [class.active]="tab===4"><a class='tabs'>Views (per location)</a></li>
+                        </ul>
+
+                        <div class="loader" *ngIf="!dataset || !labels"></div>
+                        <canvas width="300" height="300" id="myChart" *ngIf="dataset && labels"
+                                baseChart
+                                class="chart"
+                                [datasets]="dataset"
+                                [labels]="labels"
+                                [options]="barChartOptions"
+                                [chartType]="'line'">
+                        </canvas>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style type="text/css">
+  .chart {
+    display: block;
+  }
+  .tabs {
+    color: #337ab7;
+    cursor: pointer;
+  }
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin-left:46%;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>

@@ -1,0 +1,70 @@
+<div class="col-md-8 col-md-offset-2">
+  <h1>Destinations</h1>
+
+  <div name="part1" style="margin-top: 20px;">
+
+    <div class="col-md-8">
+       <div class="form-group" style="float: left;">
+        <input type="text" name="search"  placeholder="Find..." onfocus="this.placeholder = ''"
+        onblur="if (this.placeholder=='') this.placeholder='Find...';" style="height: 35px; width: 400px;" [(ngModel)]="search" />
+        <span class="btn btn-default" (click)="onSearch()" ><span class="glyphicon glyphicon-search"></span> Search</span>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-inline" style="float:right;">
+        <label>Sort by: </label>
+        <select [ngModel]="selectedSort" (ngModelChange)="onSort($event)" class="form-control">
+          <option value=""></option>
+          <option value="rating">Rating</option>
+          <option value="city">Alphabetically (city)</option>
+        </select>
+      </div>
+    </div>
+
+    <br/> <br/>
+
+  </div>
+
+  <hr />
+
+  <div name="part2">
+
+    <div class="loader" *ngIf="!locations"></div>
+    <div class="row text-center" *ngIf="locations">
+
+      <div class="col-md-4 col-sm-6 hero-feature" *ngFor="let loc of locations" >
+        <div class="thumbnail">
+          <img style="width: 800px; height: 180px;" src="{{loc.pictures[0]}}" alt="">
+          <div class="caption">
+            <h3 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{loc.city}}</h3>
+            <p style="font-style: italic;">{{loc.country}}</p>
+
+            <p>
+              <a [routerLink]="['/destination', loc._id]" class="btn btn-info">More info</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+<style type="text/css">
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin-left:46%;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
